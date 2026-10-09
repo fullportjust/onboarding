@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>FPU VIP Welcome</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one narrow terminal column — short welcome, video first, two action buttons, what the call covers, activate on Whop, embedded booking calendar */
+:root {
+  --navy: #0B1220;
+  --panel: #111A2C;
+  --line: #22304A;
+  --text: #E7ECF5;
+  --muted: #8C9AB3;
+  --green: #12E27C;
+  --gold: #F5C451;
+  --on-accent: #04140B;
+  --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --body: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--navy); color: var(--text); font-family: var(--body); font-size: 16px; line-height: 1.55; }
+.wrap { max-width: 760px; margin: 0 auto; padding-inline: 20px; padding-block: 28px 64px; display: flex; flex-direction: column; gap: 36px; }
+
+.status { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; font-family: var(--mono); font-size: 12px; color: var(--muted); border-bottom: 1px solid var(--line); padding-bottom: 14px; letter-spacing: .04em; }
+.status .live { color: var(--green); display: inline-flex; align-items: center; gap: 8px; }
+.status .live::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 4px rgba(18,226,124,.15); }
+.status .brand { color: var(--text); font-weight: 500; }
+
+header { display: flex; flex-direction: column; gap: 12px; }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); }
+h1 { font-family: var(--display); font-weight: 800; font-size: clamp(32px, 6.5vw, 50px); line-height: 1.04; letter-spacing: -.02em; margin: 0; text-wrap: balance; }
+h1 em { font-style: normal; color: var(--green); }
+.lead { color: var(--muted); font-size: 17px; max-width: 58ch; margin: 0; }
+
+.video-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.video { width: min(100%, 360px); aspect-ratio: 9 / 16; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--panel); }
+.video iframe { width: 100%; height: 100%; border: 0; display: block; }
+.watch-link { font-family: var(--mono); font-size: 12px; color: var(--muted); text-decoration: none; }
+.watch-link:hover, .watch-link:focus-visible { color: var(--gold); }
+
+.actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.action { border: 1px solid var(--line); border-radius: 6px; padding: 20px; display: flex; flex-direction: column; gap: 10px; background: var(--panel); min-width: 0; }
+.action.call { border-color: var(--gold); }
+.tag { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.action.call .tag { color: var(--gold); }
+.action.whop .tag { color: var(--green); }
+.action h3 { margin: 0; font-family: var(--display); font-size: 20px; font-weight: 700; }
+.action p { margin: 0; color: var(--muted); font-size: 15px; flex: 1; }
+.cta { display: inline-flex; justify-content: center; align-items: center; gap: 8px; padding: 14px 18px; border-radius: 4px; font-weight: 600; text-decoration: none; font-size: 15px; }
+.cta.gold { background: var(--gold); color: var(--on-accent); }
+.cta.green { background: var(--green); color: var(--on-accent); }
+.cta:hover { filter: brightness(1.08); }
+.cta:focus-visible, .watch-link:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+h2 { font-family: var(--display); font-weight: 700; font-size: 24px; margin: 0; letter-spacing: -.01em; text-wrap: balance; }
+.section { display: flex; flex-direction: column; gap: 16px; }
+.section > p { margin: 0; color: var(--muted); max-width: 62ch; }
+
+ul.checks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
+ul.checks li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; }
+ul.checks li::before { content: "✓"; color: var(--green); font-family: var(--mono); font-weight: 500; }
+ul.checks strong { display: block; }
+ul.checks span { color: var(--muted); font-size: 15px; }
+
+
+.booker { border: 1px solid var(--gold); border-radius: 6px; background: var(--panel); overflow: hidden; }
+.calendly-inline-widget { min-width: 280px; height: 700px; max-width: 100%; }
+.fallback { padding: 24px 20px; display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
+.fallback p { margin: 0; color: var(--muted); }
+#book { scroll-margin-top: 20px; }
+footer { font-family: var(--mono); font-size: 12px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+@media (prefers-reduced-motion: no-preference) { .status .live::before { animation: pulse 2s infinite; } @keyframes pulse { 50% { opacity: .35; } } }
+</style>
+<style>body{margin:0} img{max-width:100%} [hidden]{display:none!important}</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="status" aria-label="Account status">
+    <span class="brand">FULL PORT UNIVERSITY</span>
+    <span class="live">CHECKOUT COMPLETE</span>
+  </div>
+
+  <header>
+    <div class="eyebrow">Welcome to VIP</div>
+    <h1>You're in. <em>Watch this first.</em></h1>
+    <p class="lead">Book your 1-on-1 onboarding call to get fully set up and trading with confidence.</p>
+  </header>
+
+  <div class="video-wrap">
+    <div class="video">
+      <iframe src="https://www.youtube.com/embed/c29dMbjabbU?rel=0&modestbranding=1&playsinline=1" title="Welcome to Full Port University VIP" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+    </div>
+    <a id="video-link" class="watch-link" href="https://youtube.com/shorts/c29dMbjabbU" target="_blank" rel="noopener">Video not playing? Watch on YouTube →</a>
+  </div>
+
+  <div class="actions">
+    <div class="action call">
+      <div class="tag">Free · 1-on-1 · 30 min</div>
+      <h3>Book your onboarding call</h3>
+      <p>Pick a time and someone on our team walks you through everything live. Optional, but the fastest way to get started.</p>
+      <a class="cta gold" href="#book">Book my call ↓</a>
+    </div>
+    <div class="action whop">
+      <div class="tag">Membership not active yet?</div>
+      <h3>Don't see your VIP access?</h3>
+      <p>Check your email for your Whop confirmation, or activate on Whop below. It connects your Discord automatically.</p>
+      <a id="whop-link" class="cta green" href="#" target="_blank" rel="noopener">Activate my membership →</a>
+    </div>
+  </div>
+
+  <section class="section" aria-labelledby="call-h">
+    <h2 id="call-h">What happens on the onboarding call</h2>
+    <p>Someone on our team gets you set up live, so you're not figuring it out alone.</p>
+    <ul class="checks">
+      <li><div><strong>A full tour of the community</strong><span>Every channel that matters, and where to find signals, lessons, and live sessions.</span></div></li>
+      <li><div><strong>How our trades work</strong><span>How we call trades with BUY → TRIM → SELL, and how to follow along.</span></div></li>
+      <li><div><strong>Answers to your questions</strong><span>Anything about where things are and how the community runs.</span></div></li>
+      <li><div><strong>Your invite to Ufunded</strong><span>Our funding partner, so you can trade with more buying power.</span></div></li>
+    </ul>
+  </section>
+
+  <section class="section" id="book" aria-labelledby="book-h">
+    <h2 id="book-h">Pick a time for your call</h2>
+    <div class="booker">
+      <div id="calendly-embed" class="calendly-inline-widget" data-url="https://calendly.com/ryan-fullportuniversity/30min?hide_gdpr_banner=1&background_color=111a2c&text_color=e7ecf5&primary_color=f5c451"></div>
+      <div id="calendly-fallback" class="fallback" hidden>
+        <p>The calendar didn't load here. Open it in a new tab to pick your time.</p>
+        <a id="calendly-link" class="cta gold" href="https://calendly.com/ryan-fullportuniversity/30min" target="_blank" rel="noopener">Open the calendar →</a>
+      </div>
+    </div>
+  </section>
+
+  <footer><span>FULL PORT UNIVERSITY</span><span>Let's get to work. 🔒</span></footer>
+</div>
+
+<script>
+const LINKS = {
+  calendly: "https://calendly.com/ryan-fullportuniversity/30min", // onboarding call booking
+  whop: "https://whop.com/fullportuniversity/"                    // where members activate + connect Discord
+};
+document.getElementById("calendly-link").href = LINKS.calendly;
+
+// Calendly inline embed. If the calendar can't load (e.g. blocked), show the fallback button.
+(function () {
+  var s = document.createElement("script");
+  s.src = "https://assets.calendly.com/assets/external/widget.js";
+  s.async = true;
+  document.body.appendChild(s);
+  setTimeout(function () {
+    if (!document.querySelector("#calendly-embed iframe")) {
+      document.getElementById("calendly-embed").hidden = true;
+      document.getElementById("calendly-fallback").hidden = false;
+    }
+  }, 4000);
+})();
+document.getElementById("whop-link").href = LINKS.whop;
+</script>
+
+</body>
+</html>
