@@ -8,7 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: one narrow terminal column — short welcome, video first, two action buttons, what the call covers, activate on Whop, embedded booking calendar */
+/* Layout: one narrow column — welcome, video, Step 1 book the call (embedded calendar, stays on this page),
+   Step 2 connect Discord on Whop (leaves the page, so it comes second). Booking is detected and remembered. */
 :root {
   --navy: #0B1220;
   --panel: #111A2C;
@@ -24,8 +25,10 @@
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
-body { background: var(--navy); color: var(--text); font-family: var(--body); font-size: 16px; line-height: 1.55; }
-.wrap { max-width: 760px; margin: 0 auto; padding-inline: 20px; padding-block: 28px 64px; display: flex; flex-direction: column; gap: 36px; }
+body { margin: 0; background: var(--navy); color: var(--text); font-family: var(--body); font-size: 16px; line-height: 1.55; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+.wrap { max-width: 760px; margin: 0 auto; padding-inline: 16px; padding-block: 28px 64px; display: flex; flex-direction: column; gap: 36px; }
 
 .status { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; font-family: var(--mono); font-size: 12px; color: var(--muted); border-bottom: 1px solid var(--line); padding-bottom: 14px; letter-spacing: .04em; }
 .status .live { color: var(--green); display: inline-flex; align-items: center; gap: 8px; }
@@ -44,40 +47,61 @@ h1 em { font-style: normal; color: var(--green); }
 .watch-link { font-family: var(--mono); font-size: 12px; color: var(--muted); text-decoration: none; }
 .watch-link:hover, .watch-link:focus-visible { color: var(--gold); }
 
-.actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
-.action { border: 1px solid var(--line); border-radius: 6px; padding: 20px; display: flex; flex-direction: column; gap: 10px; background: var(--panel); min-width: 0; }
-.action.call { border-color: var(--gold); }
-.tag { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
-.action.call .tag { color: var(--gold); }
-.action.whop .tag { color: var(--green); }
-.action h3 { margin: 0; font-family: var(--display); font-size: 20px; font-weight: 700; }
-.action p { margin: 0; color: var(--muted); font-size: 15px; flex: 1; }
-.cta { display: inline-flex; justify-content: center; align-items: center; gap: 8px; padding: 14px 18px; border-radius: 4px; font-weight: 600; text-decoration: none; font-size: 15px; }
-.cta.gold { background: var(--gold); color: var(--on-accent); }
-.cta.green { background: var(--green); color: var(--on-accent); }
-.cta:hover { filter: brightness(1.08); }
-.cta:focus-visible, .watch-link:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+/* Step overview */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+.steps li { border: 1px solid var(--line); border-radius: 6px; padding: 12px 14px; background: var(--panel); display: flex; gap: 12px; align-items: center; font-weight: 600; font-size: 15px; }
+.steps a { color: inherit; text-decoration: none; display: flex; gap: 12px; align-items: center; width: 100%; }
+.num { flex: none; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-family: var(--mono); font-size: 13px; border: 1px solid var(--gold); color: var(--gold); }
+.steps .s2 .num { border-color: var(--green); color: var(--green); }
+.steps small { display: block; font-weight: 400; color: var(--muted); font-size: 13px; }
+.call-booked .steps .s1 .num { background: var(--gold); color: var(--on-accent); }
+.call-booked .steps .s1 .num::after { content: "✓"; }
+.call-booked .steps .s1 .num span { display: none; }
 
+/* Step sections */
+.step { border: 1px solid var(--line); border-radius: 8px; background: var(--panel); padding: 22px 20px; display: flex; flex-direction: column; gap: 16px; scroll-margin-top: 16px; }
+.step.one { border-color: var(--gold); }
+.step.two { border-color: var(--line); }
+.call-booked .step.two { border-color: var(--green); box-shadow: 0 0 0 3px rgba(18,226,124,.12); }
+.step-tag { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+.one .step-tag { color: var(--gold); }
+.two .step-tag { color: var(--green); }
 h2 { font-family: var(--display); font-weight: 700; font-size: 24px; margin: 0; letter-spacing: -.01em; text-wrap: balance; }
-.section { display: flex; flex-direction: column; gap: 16px; }
-.section > p { margin: 0; color: var(--muted); max-width: 62ch; }
+.step > p { margin: 0; color: var(--muted); max-width: 62ch; }
 
-ul.checks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
-ul.checks li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; }
+ul.checks { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px 18px; }
+ul.checks li { display: grid; grid-template-columns: 20px 1fr; gap: 8px; }
 ul.checks li::before { content: "✓"; color: var(--green); font-family: var(--mono); font-weight: 500; }
-ul.checks strong { display: block; }
-ul.checks span { color: var(--muted); font-size: 15px; }
+ul.checks strong { display: block; font-size: 15px; }
+ul.checks span { color: var(--muted); font-size: 14px; }
 
-
-.booker { border: 1px solid var(--gold); border-radius: 6px; background: var(--panel); overflow: hidden; }
+.booker { border: 1px solid var(--line); border-radius: 6px; background: var(--navy); overflow: hidden; }
 .calendly-inline-widget { min-width: 280px; height: 700px; max-width: 100%; }
 .fallback { padding: 24px 20px; display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
 .fallback p { margin: 0; color: var(--muted); }
-#book { scroll-margin-top: 20px; }
+
+.booked-note { display: none; border: 1px solid var(--gold); border-radius: 6px; padding: 14px 16px; background: rgba(245,196,81,.08); }
+.booked-note strong { color: var(--gold); }
+.booked-note p { margin: 4px 0 0; color: var(--muted); font-size: 15px; }
+.call-booked .booked-note { display: block; }
+
+.cta { display: inline-flex; justify-content: center; align-items: center; gap: 8px; padding: 14px 18px; border-radius: 4px; font-weight: 600; text-decoration: none; font-size: 15px; border: 0; cursor: pointer; font-family: var(--body); }
+.cta.gold { background: var(--gold); color: var(--on-accent); }
+.cta.green { background: var(--green); color: var(--on-accent); }
+.cta.ghost { background: transparent; color: var(--text); border: 1px solid var(--line); }
+.cta:hover { filter: brightness(1.08); }
+.cta:focus-visible, .watch-link:focus-visible, .steps a:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 10px; }
+
+ol.howto { margin: 0; padding-left: 20px; color: var(--muted); font-size: 15px; display: flex; flex-direction: column; gap: 6px; }
+ol.howto b { color: var(--text); font-weight: 600; }
+.tip { font-size: 14px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 14px; margin: 0; }
+.tip a { color: var(--gold); }
+.copied { font-family: var(--mono); font-size: 12px; color: var(--green); align-self: center; }
+
 footer { font-family: var(--mono); font-size: 12px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
 @media (prefers-reduced-motion: no-preference) { .status .live::before { animation: pulse 2s infinite; } @keyframes pulse { 50% { opacity: .35; } } }
 </style>
-<style>body{margin:0} img{max-width:100%} [hidden]{display:none!important}</style>
 </head>
 <body>
 
@@ -90,7 +114,7 @@ footer { font-family: var(--mono); font-size: 12px; color: var(--muted); display
   <header>
     <div class="eyebrow">Welcome to VIP</div>
     <h1>You're in. <em>Watch this first.</em></h1>
-    <p class="lead">Book your 1-on-1 onboarding call to get fully set up and trading with confidence.</p>
+    <p class="lead">Two quick steps: book your free onboarding call on this page, then connect your Discord.</p>
   </header>
 
   <div class="video-wrap">
@@ -100,41 +124,52 @@ footer { font-family: var(--mono); font-size: 12px; color: var(--muted); display
     <a id="video-link" class="watch-link" href="https://youtube.com/shorts/c29dMbjabbU" target="_blank" rel="noopener">Video not playing? Watch on YouTube →</a>
   </div>
 
-  <div class="actions">
-    <div class="action call">
-      <div class="tag">Free · 1-on-1 · 30 min</div>
-      <h3>Book your onboarding call</h3>
-      <p>Pick a time and someone on our team walks you through everything live. Optional, but the fastest way to get started.</p>
-      <a class="cta gold" href="#book">Book my call ↓</a>
-    </div>
-    <div class="action whop">
-      <div class="tag">Membership not active yet?</div>
-      <h3>Don't see your VIP access?</h3>
-      <p>Check your email for your Whop confirmation, or activate on Whop below. It connects your Discord automatically.</p>
-      <a id="whop-link" class="cta green" href="#" target="_blank" rel="noopener">Activate my membership →</a>
-    </div>
-  </div>
+  <ol class="steps" aria-label="Your two steps">
+    <li class="s1"><a href="#book"><span class="num"><span>1</span></span><span>Book your onboarding call<small>Free · 1-on-1 · 30 min</small></span></a></li>
+    <li class="s2"><a href="#activate"><span class="num">2</span><span>Connect your Discord<small>Activates your VIP access</small></span></a></li>
+  </ol>
 
-  <section class="section" aria-labelledby="call-h">
-    <h2 id="call-h">What happens on the onboarding call</h2>
-    <p>Someone on our team gets you set up live, so you're not figuring it out alone.</p>
+  <!-- STEP 1 — stays on this page -->
+  <section class="step one" id="book" aria-labelledby="book-h">
+    <div class="step-tag">Step 1 · Free · 1-on-1 · 30 min</div>
+    <h2 id="book-h">Book your onboarding call</h2>
+    <p>Pick a time below and someone on our team walks you through everything live. Do this first, so you don't lose this page when Discord opens.</p>
     <ul class="checks">
       <li><div><strong>A full tour of the community</strong><span>Every channel that matters, and where to find signals, lessons, and live sessions.</span></div></li>
       <li><div><strong>How our trades work</strong><span>How we call trades with BUY → TRIM → SELL, and how to follow along.</span></div></li>
       <li><div><strong>Answers to your questions</strong><span>Anything about where things are and how the community runs.</span></div></li>
       <li><div><strong>Your invite to Ufunded</strong><span>Our funding partner, so you can trade with more buying power.</span></div></li>
     </ul>
-  </section>
 
-  <section class="section" id="book" aria-labelledby="book-h">
-    <h2 id="book-h">Pick a time for your call</h2>
+    <div class="booked-note" role="status" aria-live="polite">
+      <strong>✓ Your call is booked.</strong>
+      <p>Check your email for the confirmation. Now do Step 2 below to connect your Discord.</p>
+    </div>
+
     <div class="booker">
-      <div id="calendly-embed" class="calendly-inline-widget" data-url="https://calendly.com/ryan-fullportuniversity/30min?hide_gdpr_banner=1&background_color=111a2c&text_color=e7ecf5&primary_color=f5c451"></div>
+      <div id="calendly-embed" class="calendly-inline-widget" data-url="https://calendly.com/ryan-fullportuniversity/30min?hide_gdpr_banner=1&background_color=0b1220&text_color=e7ecf5&primary_color=f5c451"></div>
       <div id="calendly-fallback" class="fallback" hidden>
         <p>The calendar didn't load here. Open it in a new tab to pick your time.</p>
         <a id="calendly-link" class="cta gold" href="https://calendly.com/ryan-fullportuniversity/30min" target="_blank" rel="noopener">Open the calendar →</a>
       </div>
     </div>
+  </section>
+
+  <!-- STEP 2 — leaves the page (Whop → Discord) -->
+  <section class="step two" id="activate" aria-labelledby="activate-h">
+    <div class="step-tag">Step 2 · Activate VIP</div>
+    <h2 id="activate-h">Connect your Discord</h2>
+    <ol class="howto">
+      <li>Tap <b>Connect Discord on Whop</b>. Log in to Whop with the email you just paid with.</li>
+      <li>Tap <b>Connect Discord</b> and approve. You'll be added to the server with your VIP role.</li>
+      <li>Open Discord. FPU is now in your server list.</li>
+    </ol>
+    <div class="btn-row">
+      <a id="whop-link" class="cta green" href="https://whop.com/joined/fullportuniversity/click-here-to-join-discord-as-a-vip-member-xd8mZNLDg4EoGc/app/" target="_blank" rel="noopener">Connect Discord on Whop →</a>
+      <button id="copy-link" class="cta ghost" type="button">Copy this page's link</button>
+      <span id="copied" class="copied" hidden>Copied ✓</span>
+    </div>
+    <p class="tip">Haven't booked yet? Do Step 1 first. On your phone, Whop or Discord may open in its own app. If you lose this page, your call link is <a href="https://calendly.com/ryan-fullportuniversity/30min" target="_blank" rel="noopener">calendly.com/ryan-fullportuniversity/30min</a>. Stuck? Email <a href="mailto:growth@fullportuniversity.com">growth@fullportuniversity.com</a>.</p>
   </section>
 
   <footer><span>FULL PORT UNIVERSITY</span><span>Let's get to work. 🔒</span></footer>
@@ -143,9 +178,11 @@ footer { font-family: var(--mono); font-size: 12px; color: var(--muted); display
 <script>
 const LINKS = {
   calendly: "https://calendly.com/ryan-fullportuniversity/30min", // onboarding call booking
-  whop: "https://whop.com/fullportuniversity/"                    // where members activate + connect Discord
+  // The Discord app inside the member's Whop membership (NOT the storefront, which shows a buy page)
+  whop: "https://whop.com/joined/fullportuniversity/click-here-to-join-discord-as-a-vip-member-xd8mZNLDg4EoGc/app/"
 };
 document.getElementById("calendly-link").href = LINKS.calendly;
+document.getElementById("whop-link").href = LINKS.whop;
 
 // Calendly inline embed. If the calendar can't load (e.g. blocked), show the fallback button.
 (function () {
@@ -160,7 +197,32 @@ document.getElementById("calendly-link").href = LINKS.calendly;
     }
   }, 4000);
 })();
-document.getElementById("whop-link").href = LINKS.whop;
+
+// Booking detection: Calendly's embed posts "calendly.event_scheduled" to this page when a time is booked.
+// Mark Step 1 done, remember it for return visits, and point the member to Step 2.
+(function () {
+  var KEY = "fpu_call_booked";
+  try { if (localStorage.getItem(KEY)) document.body.classList.add("call-booked"); } catch (e) {}
+  window.addEventListener("message", function (e) {
+    if (e.origin !== "https://calendly.com") return;
+    if (e.data && e.data.event === "calendly.event_scheduled") {
+      try { localStorage.setItem(KEY, "1"); } catch (err) {}
+      document.body.classList.add("call-booked");
+      setTimeout(function () {
+        document.getElementById("activate").scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 1800);
+    }
+  });
+})();
+
+// Copy this page's link so members can come back after Whop/Discord opens in another app.
+document.getElementById("copy-link").addEventListener("click", function () {
+  var url = location.origin + location.pathname;
+  var done = function () { var c = document.getElementById("copied"); c.hidden = false; setTimeout(function () { c.hidden = true; }, 2000); };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(url).then(done, function () { window.prompt("Copy this link:", url); });
+  } else { window.prompt("Copy this link:", url); }
+});
 </script>
 
 </body>
