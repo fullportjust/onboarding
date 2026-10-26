@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="https://embed.typeform.com/next/css/widget.css">
 <style>
-/* Layout: one narrow column — headline, Step 1 Typeform (on this page), Step 2 activate on Whop (unlocks after the form), what happens next */
+/* Layout: one narrow column — headline, Step 1 Typeform (on this page), Step 2 activate on Whop (unlocks after the form), Ufunded funding offer, what happens next */
 :root {
   --navy: #0B1220;
   --panel: #111A2C;
@@ -71,6 +71,11 @@ ol.howto { margin: 0; padding-left: 22px; display: flex; flex-direction: column;
 .cta:focus-visible, .small-link:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
 .note { font-size: 14px; }
 
+.fund { border: 1px solid var(--gold); border-radius: 8px; background: var(--panel); padding: 22px 18px; display: flex; flex-direction: column; gap: 14px; }
+.fund-tag { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); }
+.fund p { margin: 0; color: var(--muted); }
+.cta.gold { background: var(--gold); }
+
 .next { display: flex; flex-direction: column; gap: 10px; }
 .next h2 { font-size: 20px; }
 .next ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
@@ -121,6 +126,19 @@ footer { font-family: var(--mono); font-size: 12px; color: var(--muted); display
       <a id="whop-link" class="cta" href="https://whop.com/joined/fullportuniversity/click-here-to-join-discord-as-a-vip-member-xd8mZNLDg4EoGc/app/" target="_blank" rel="noopener">Activate my membership →</a>
       <p class="note">You can also use the link in the email Whop sent you.</p>
     </div>
+  </section>
+
+  <!-- FUNDING PARTNER -->
+  <section class="fund" aria-labelledby="fund-h">
+    <div class="fund-tag">Partner offer · Ufunded</div>
+    <h2 id="fund-h">Want more buying power? Trade up to $90,000.</h2>
+    <p>Justin partnered with Ufunded so FPU members can trade a funded account instead of only their own savings. Same trades, bigger size, and you keep up to 90% of the profits.</p>
+    <ol class="howto">
+      <li>Click <b>Book my funding call</b>.</li>
+      <li>Pick a time for your free 1-on-1 call with Ufunded.</li>
+    </ol>
+    <a class="cta gold" href="https://ufunded.com/fullport?utm_medium=FullPort#demo" target="_blank" rel="noopener">Book my funding call →</a>
+    <a class="small-link" href="https://ufunded.com/fullport?utm_medium=FullPort" target="_blank" rel="noopener">See account sizes →</a>
   </section>
 
   <section class="next" aria-labelledby="next-h">
