@@ -7,9 +7,9 @@
 <title>FPU VIP Welcome</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://embed.typeform.com/next/css/widget.css">
 <style>
-/* Layout: one narrow column — welcome, video, Step 1 book the call (embedded calendar, stays on this page),
-   Step 2 connect Discord on Whop (leaves the page, so it comes second). Booking is detected and remembered. */
+/* Layout: one narrow column — headline, Step 1 Typeform (on this page), Step 2 activate on Whop (unlocks after the form), what happens next */
 :root {
   --navy: #0B1220;
   --panel: #111A2C;
@@ -26,81 +26,60 @@
 }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--navy); color: var(--text); font-family: var(--body); font-size: 16px; line-height: 1.55; }
-img { max-width: 100%; }
 [hidden] { display: none !important; }
-.wrap { max-width: 760px; margin: 0 auto; padding-inline: 16px; padding-block: 28px 64px; display: flex; flex-direction: column; gap: 36px; }
+.wrap { max-width: 720px; margin: 0 auto; padding-inline: 16px; padding-block: 28px 64px; display: flex; flex-direction: column; gap: 28px; }
 
 .status { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; font-family: var(--mono); font-size: 12px; color: var(--muted); border-bottom: 1px solid var(--line); padding-bottom: 14px; letter-spacing: .04em; }
 .status .live { color: var(--green); display: inline-flex; align-items: center; gap: 8px; }
-.status .live::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 4px rgba(18,226,124,.15); }
+.status .live::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--green); }
 .status .brand { color: var(--text); font-weight: 500; }
 
-header { display: flex; flex-direction: column; gap: 12px; }
+header { display: flex; flex-direction: column; gap: 10px; }
 .eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); }
-h1 { font-family: var(--display); font-weight: 800; font-size: clamp(32px, 6.5vw, 50px); line-height: 1.04; letter-spacing: -.02em; margin: 0; text-wrap: balance; }
+h1 { font-family: var(--display); font-weight: 800; font-size: clamp(32px, 6.5vw, 48px); line-height: 1.05; letter-spacing: -.02em; margin: 0; text-wrap: balance; }
 h1 em { font-style: normal; color: var(--green); }
-.lead { color: var(--muted); font-size: 17px; max-width: 58ch; margin: 0; }
+.lead { color: var(--muted); font-size: 17px; margin: 0; }
 
-.video-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; }
-.video { width: min(100%, 360px); aspect-ratio: 9 / 16; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--panel); }
-.video iframe { width: 100%; height: 100%; border: 0; display: block; }
-.watch-link { font-family: var(--mono); font-size: 12px; color: var(--muted); text-decoration: none; }
-.watch-link:hover, .watch-link:focus-visible { color: var(--gold); }
-
-/* Step overview */
-.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
-.steps li { border: 1px solid var(--line); border-radius: 6px; padding: 12px 14px; background: var(--panel); display: flex; gap: 12px; align-items: center; font-weight: 600; font-size: 15px; }
-.steps a { color: inherit; text-decoration: none; display: flex; gap: 12px; align-items: center; width: 100%; }
-.num { flex: none; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-family: var(--mono); font-size: 13px; border: 1px solid var(--gold); color: var(--gold); }
-.steps .s2 .num { border-color: var(--green); color: var(--green); }
-.steps small { display: block; font-weight: 400; color: var(--muted); font-size: 13px; }
-.call-booked .steps .s1 .num { background: var(--gold); color: var(--on-accent); }
-.call-booked .steps .s1 .num::after { content: "✓"; }
-.call-booked .steps .s1 .num span { display: none; }
-
-/* Step sections */
-.step { border: 1px solid var(--line); border-radius: 8px; background: var(--panel); padding: 22px 20px; display: flex; flex-direction: column; gap: 16px; scroll-margin-top: 16px; }
+.step { border: 1px solid var(--line); border-radius: 8px; background: var(--panel); padding: 22px 18px; display: flex; flex-direction: column; gap: 14px; scroll-margin-top: 16px; }
 .step.one { border-color: var(--gold); }
-.step.two { border-color: var(--line); }
-.call-booked .step.two { border-color: var(--green); box-shadow: 0 0 0 3px rgba(18,226,124,.12); }
-.step-tag { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
-.one .step-tag { color: var(--gold); }
-.two .step-tag { color: var(--green); }
-h2 { font-family: var(--display); font-weight: 700; font-size: 24px; margin: 0; letter-spacing: -.01em; text-wrap: balance; }
-.step > p { margin: 0; color: var(--muted); max-width: 62ch; }
+.form-done .step.one { border-color: var(--line); }
+.form-done .step.two { border-color: var(--green); }
+.step-head { display: flex; align-items: center; gap: 12px; }
+.num { flex: none; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-family: var(--mono); font-size: 15px; font-weight: 500; border: 1px solid var(--gold); color: var(--gold); }
+.two .num { border-color: var(--line); color: var(--muted); }
+.form-done .one .num { background: var(--gold); color: var(--on-accent); }
+.form-done .two .num { border-color: var(--green); color: var(--green); }
+h2 { font-family: var(--display); font-weight: 700; font-size: 24px; margin: 0; letter-spacing: -.01em; }
+.step p { margin: 0; color: var(--muted); }
 
-ul.checks { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px 18px; }
-ul.checks li { display: grid; grid-template-columns: 20px 1fr; gap: 8px; }
-ul.checks li::before { content: "✓"; color: var(--green); font-family: var(--mono); font-weight: 500; }
-ul.checks strong { display: block; font-size: 15px; }
-ul.checks span { color: var(--muted); font-size: 14px; }
+.form-box { border: 1px solid var(--line); border-radius: 6px; background: var(--navy); overflow: hidden; }
+.form-box [data-tf-widget] { width: 100%; height: 600px; }
+.small-link { font-family: var(--mono); font-size: 12px; color: var(--muted); text-decoration: none; align-self: flex-start; }
+.small-link:hover, .small-link:focus-visible { color: var(--gold); }
+.done-note { display: none; }
+.form-done .done-note { display: block; color: var(--gold); font-weight: 600; }
+.form-done .one .form-box, .form-done .one .small-link, .form-done .one .instr { display: none; }
 
-.booker { border: 1px solid var(--line); border-radius: 6px; background: var(--navy); overflow: hidden; }
-.calendly-inline-widget { min-width: 280px; height: 700px; max-width: 100%; }
-.fallback { padding: 24px 20px; display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
-.fallback p { margin: 0; color: var(--muted); }
+.locked { border: 1px dashed var(--line); border-radius: 6px; padding: 14px 16px; color: var(--muted); font-size: 15px; }
+.form-done .locked { display: none; }
+.unlock { display: none; flex-direction: column; gap: 16px; }
+.form-done .unlock { display: flex; }
 
-.booked-note { display: none; border: 1px solid var(--gold); border-radius: 6px; padding: 14px 16px; background: rgba(245,196,81,.08); }
-.booked-note strong { color: var(--gold); }
-.booked-note p { margin: 4px 0 0; color: var(--muted); font-size: 15px; }
-.call-booked .booked-note { display: block; }
-
-.cta { display: inline-flex; justify-content: center; align-items: center; gap: 8px; padding: 14px 18px; border-radius: 4px; font-weight: 600; text-decoration: none; font-size: 15px; border: 0; cursor: pointer; font-family: var(--body); }
-.cta.gold { background: var(--gold); color: var(--on-accent); }
-.cta.green { background: var(--green); color: var(--on-accent); }
-.cta.ghost { background: transparent; color: var(--text); border: 1px solid var(--line); }
+ol.howto { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 8px; font-size: 16px; }
+.cta { display: inline-flex; justify-content: center; align-items: center; padding: 15px 22px; border-radius: 4px; font-weight: 600; text-decoration: none; font-size: 16px; background: var(--green); color: var(--on-accent); align-self: flex-start; border: 0; cursor: pointer; font-family: var(--body); }
 .cta:hover { filter: brightness(1.08); }
-.cta:focus-visible, .watch-link:focus-visible, .steps a:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
-.btn-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.cta:focus-visible, .small-link:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+.note { font-size: 14px; }
 
-ol.howto { margin: 0; padding-left: 20px; color: var(--muted); font-size: 15px; display: flex; flex-direction: column; gap: 6px; }
-ol.howto b { color: var(--text); font-weight: 600; }
-.tip { font-size: 14px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 14px; margin: 0; }
-.tip a { color: var(--gold); }
-.copied { font-family: var(--mono); font-size: 12px; color: var(--green); align-self: center; }
+.next { display: flex; flex-direction: column; gap: 10px; }
+.next h2 { font-size: 20px; }
+.next ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.next li { display: grid; grid-template-columns: 20px 1fr; gap: 8px; }
+.next li::before { content: "✓"; color: var(--green); font-family: var(--mono); }
+.help { font-size: 14px; color: var(--muted); margin: 0; }
+.help a { color: var(--gold); }
 
-footer { font-family: var(--mono); font-size: 12px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
-@media (prefers-reduced-motion: no-preference) { .status .live::before { animation: pulse 2s infinite; } @keyframes pulse { 50% { opacity: .35; } } }
+footer { font-family: var(--mono); font-size: 12px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; border-top: 1px solid var(--line); padding-top: 16px; }
 </style>
 </head>
 <body>
@@ -108,122 +87,74 @@ footer { font-family: var(--mono); font-size: 12px; color: var(--muted); display
 <div class="wrap">
   <div class="status" aria-label="Account status">
     <span class="brand">FULL PORT UNIVERSITY</span>
-    <span class="live">CHECKOUT COMPLETE</span>
+    <span class="live">PAYMENT RECEIVED</span>
   </div>
 
   <header>
-    <div class="eyebrow">Welcome to VIP</div>
-    <h1>You're in. <em>Watch this first.</em></h1>
-    <p class="lead">Two quick steps: book your free onboarding call on this page, then connect your Discord.</p>
+    <div class="eyebrow">Welcome to the community</div>
+    <h1>Welcome to Full Port University. <em>2 steps to get started.</em></h1>
+    <p class="lead">We're glad you're here. These 2 steps make sure you get the best experience possible. Once you're set up, we'll send you education resources and help you start your trading journey.</p>
   </header>
 
-  <div class="video-wrap">
-    <div class="video">
-      <iframe src="https://www.youtube.com/embed/c29dMbjabbU?rel=0&modestbranding=1&playsinline=1" title="Welcome to Full Port University VIP" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+  <!-- STEP 1 -->
+  <section class="step one" id="onboard" aria-labelledby="onboard-h">
+    <div class="step-head"><span class="num">1</span><h2 id="onboard-h">Fill out the form</h2></div>
+    <p class="instr">Answer the questions below. It takes 2 minutes.</p>
+    <p class="done-note" role="status" aria-live="polite">✓ Done. Now do Step 2.</p>
+    <div class="form-box">
+      <div data-tf-widget="bJBux5FE" data-tf-on-submit="fpuFormDone" data-tf-inline-on-mobile data-tf-medium="snippet" data-tf-hidden="source=welcome_page"></div>
     </div>
-    <a id="video-link" class="watch-link" href="https://youtube.com/shorts/c29dMbjabbU" target="_blank" rel="noopener">Video not playing? Watch on YouTube →</a>
-  </div>
+    <a id="open-form" class="small-link" href="https://form.typeform.com/to/bJBux5FE" target="_blank" rel="noopener">Form not showing? Open it here →</a>
+  </section>
 
-  <ol class="steps" aria-label="Your two steps">
-    <li class="s1"><a href="#book"><span class="num"><span>1</span></span><span>Book your onboarding call<small>Free · 1-on-1 · 30 min</small></span></a></li>
-    <li class="s2"><a href="#activate"><span class="num">2</span><span>Connect your Discord<small>Activates your VIP access</small></span></a></li>
-  </ol>
-
-  <!-- STEP 1 — stays on this page -->
-  <section class="step one" id="book" aria-labelledby="book-h">
-    <div class="step-tag">Step 1 · Free · 1-on-1 · 30 min</div>
-    <h2 id="book-h">Book your onboarding call</h2>
-    <p>Pick a time below and someone on our team walks you through everything live. Do this first, so you don't lose this page when Discord opens.</p>
-    <ul class="checks">
-      <li><div><strong>A full tour of the community</strong><span>Every channel that matters, and where to find signals, lessons, and live sessions.</span></div></li>
-      <li><div><strong>How our trades work</strong><span>How we call trades with BUY → TRIM → SELL, and how to follow along.</span></div></li>
-      <li><div><strong>Answers to your questions</strong><span>Anything about where things are and how the community runs.</span></div></li>
-      <li><div><strong>Your invite to Ufunded</strong><span>Our funding partner, so you can trade with more buying power.</span></div></li>
-    </ul>
-
-    <div class="booked-note" role="status" aria-live="polite">
-      <strong>✓ Your call is booked.</strong>
-      <p>Check your email for the confirmation. Now do Step 2 below to connect your Discord.</p>
-    </div>
-
-    <div class="booker">
-      <div id="calendly-embed" class="calendly-inline-widget" data-url="https://calendly.com/ryan-fullportuniversity/30min?hide_gdpr_banner=1&background_color=0b1220&text_color=e7ecf5&primary_color=f5c451"></div>
-      <div id="calendly-fallback" class="fallback" hidden>
-        <p>The calendar didn't load here. Open it in a new tab to pick your time.</p>
-        <a id="calendly-link" class="cta gold" href="https://calendly.com/ryan-fullportuniversity/30min" target="_blank" rel="noopener">Open the calendar →</a>
-      </div>
+  <!-- STEP 2 -->
+  <section class="step two" id="activate" aria-labelledby="activate-h">
+    <div class="step-head"><span class="num">2</span><h2 id="activate-h">Activate your membership</h2></div>
+    <div class="locked">🔒 Finish Step 1 to unlock.</div>
+    <div class="unlock">
+      <ol class="howto">
+        <li>Click <b>Activate my membership</b> below.</li>
+        <li>Log in to Whop with the email you paid with.</li>
+        <li>Click <b>Connect Discord</b>, then <b>Authorize</b>.</li>
+      </ol>
+      <a id="whop-link" class="cta" href="https://whop.com/joined/fullportuniversity/click-here-to-join-discord-as-a-vip-member-xd8mZNLDg4EoGc/app/" target="_blank" rel="noopener">Activate my membership →</a>
+      <p class="note">You can also use the link in the email Whop sent you.</p>
     </div>
   </section>
 
-  <!-- STEP 2 — leaves the page (Whop → Discord) -->
-  <section class="step two" id="activate" aria-labelledby="activate-h">
-    <div class="step-tag">Step 2 · Activate VIP</div>
-    <h2 id="activate-h">Connect your Discord</h2>
-    <ol class="howto">
-      <li>Tap <b>Connect Discord on Whop</b>. Log in to Whop with the email you just paid with.</li>
-      <li>Tap <b>Connect Discord</b> and approve. You'll be added to the server with your VIP role.</li>
-      <li>Open Discord. FPU is now in your server list.</li>
-    </ol>
-    <div class="btn-row">
-      <a id="whop-link" class="cta green" href="https://whop.com/joined/fullportuniversity/click-here-to-join-discord-as-a-vip-member-xd8mZNLDg4EoGc/app/" target="_blank" rel="noopener">Connect Discord on Whop →</a>
-      <button id="copy-link" class="cta ghost" type="button">Copy this page's link</button>
-      <span id="copied" class="copied" hidden>Copied ✓</span>
-    </div>
-    <p class="tip">Haven't booked yet? Do Step 1 first. On your phone, Whop or Discord may open in its own app. If you lose this page, your call link is <a href="https://calendly.com/ryan-fullportuniversity/30min" target="_blank" rel="noopener">calendly.com/ryan-fullportuniversity/30min</a>. Stuck? Email <a href="mailto:growth@fullportuniversity.com">growth@fullportuniversity.com</a>.</p>
+  <section class="next" aria-labelledby="next-h">
+    <h2 id="next-h">What happens next</h2>
+    <ul>
+      <li>We send you a welcome message.</li>
+      <li>We send you education resources to start your trading journey.</li>
+      <li>Our team calls you to get you set up.</li>
+    </ul>
+    <p class="help">Stuck? Email <a href="mailto:growth@fullportuniversity.com">growth@fullportuniversity.com</a></p>
   </section>
 
   <footer><span>FULL PORT UNIVERSITY</span><span>Let's get to work. 🔒</span></footer>
 </div>
 
 <script>
-const LINKS = {
-  calendly: "https://calendly.com/ryan-fullportuniversity/30min", // onboarding call booking
-  // The Discord app inside the member's Whop membership (NOT the storefront, which shows a buy page)
-  whop: "https://whop.com/joined/fullportuniversity/click-here-to-join-discord-as-a-vip-member-xd8mZNLDg4EoGc/app/"
-};
-document.getElementById("calendly-link").href = LINKS.calendly;
-document.getElementById("whop-link").href = LINKS.whop;
-
-// Calendly inline embed. If the calendar can't load (e.g. blocked), show the fallback button.
+// Step 2 unlocks when the Typeform is submitted, and stays unlocked on return visits.
 (function () {
-  var s = document.createElement("script");
-  s.src = "https://assets.calendly.com/assets/external/widget.js";
-  s.async = true;
-  document.body.appendChild(s);
-  setTimeout(function () {
-    if (!document.querySelector("#calendly-embed iframe")) {
-      document.getElementById("calendly-embed").hidden = true;
-      document.getElementById("calendly-fallback").hidden = false;
-    }
-  }, 4000);
-})();
-
-// Booking detection: Calendly's embed posts "calendly.event_scheduled" to this page when a time is booked.
-// Mark Step 1 done, remember it for return visits, and point the member to Step 2.
-(function () {
-  var KEY = "fpu_call_booked";
-  try { if (localStorage.getItem(KEY)) document.body.classList.add("call-booked"); } catch (e) {}
-  window.addEventListener("message", function (e) {
-    if (e.origin !== "https://calendly.com") return;
-    if (e.data && e.data.event === "calendly.event_scheduled") {
-      try { localStorage.setItem(KEY, "1"); } catch (err) {}
-      document.body.classList.add("call-booked");
-      setTimeout(function () {
-        document.getElementById("activate").scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 1800);
-    }
+  var KEY = "fpu_onboarding_done";
+  function done(scroll) {
+    document.body.classList.add("form-done");
+    try { localStorage.setItem(KEY, "1"); } catch (e) {}
+    if (scroll) setTimeout(function () {
+      document.getElementById("activate").scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 800);
+  }
+  try { if (localStorage.getItem(KEY)) done(false); } catch (e) {}
+  window.fpuFormDone = function () { done(true); };   // called by the Typeform embed on submit
+  // If the embed fails and they fill out the form in a new tab, unlock Step 2 when they come back.
+  document.getElementById("open-form").addEventListener("click", function () {
+    window.addEventListener("focus", function () { done(true); }, { once: true });
   });
 })();
-
-// Copy this page's link so members can come back after Whop/Discord opens in another app.
-document.getElementById("copy-link").addEventListener("click", function () {
-  var url = location.origin + location.pathname;
-  var done = function () { var c = document.getElementById("copied"); c.hidden = false; setTimeout(function () { c.hidden = true; }, 2000); };
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(url).then(done, function () { window.prompt("Copy this link:", url); });
-  } else { window.prompt("Copy this link:", url); }
-});
 </script>
+<script src="https://embed.typeform.com/next/embed.js"></script>
 
 </body>
 </html>
