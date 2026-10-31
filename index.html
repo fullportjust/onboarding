@@ -7,9 +7,8 @@
 <title>FPU VIP Welcome</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="https://embed.typeform.com/next/css/widget.css">
 <style>
-/* Layout: one narrow column — headline, Step 1 Typeform (on this page), Step 2 activate on Whop (unlocks after the form), Ufunded funding offer, what happens next */
+/* Layout: one narrow column — headline, Step 1 connect Discord via Whop, Step 2 start Day 1, Ufunded funding offer, what happens next */
 :root {
   --navy: #0B1220;
   --panel: #111A2C;
@@ -46,7 +45,7 @@ h1 em { font-style: normal; color: var(--green); }
 .form-done .step.two { border-color: var(--green); }
 .step-head { display: flex; align-items: center; gap: 12px; }
 .num { flex: none; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-family: var(--mono); font-size: 15px; font-weight: 500; border: 1px solid var(--gold); color: var(--gold); }
-.two .num { border-color: var(--line); color: var(--muted); }
+.two .num { border-color: var(--green); color: var(--green); }
 .form-done .one .num { background: var(--gold); color: var(--on-accent); }
 .form-done .two .num { border-color: var(--green); color: var(--green); }
 h2 { font-family: var(--display); font-weight: 700; font-size: 24px; margin: 0; letter-spacing: -.01em; }
@@ -99,33 +98,26 @@ footer { font-family: var(--mono); font-size: 12px; color: var(--muted); display
   <header>
     <div class="eyebrow">Welcome to the community</div>
     <h1>Welcome to Full Port University. <em>2 steps to get started.</em></h1>
-    <p class="lead">We're glad you're here. These 2 steps make sure you get the best experience possible. Once you're set up, we'll send you education resources and help you start your trading journey.</p>
+    <p class="lead">We're glad you're here. Do these 2 steps now so you don't miss the next live trade.</p>
   </header>
 
   <!-- STEP 1 -->
-  <section class="step one" id="onboard" aria-labelledby="onboard-h">
-    <div class="step-head"><span class="num">1</span><h2 id="onboard-h">Fill out the form</h2></div>
-    <p class="instr">Answer the questions below. It takes 2 minutes. Use a phone number you'll answer. Justin or someone on our team will call to welcome you and help you get started.</p>
-    <p class="done-note" role="status" aria-live="polite">✓ Done. Now do Step 2.</p>
-    <div class="form-box">
-      <div data-tf-widget="bJBux5FE" data-tf-on-submit="fpuFormDone" data-tf-inline-on-mobile data-tf-medium="snippet" data-tf-hidden="source=welcome_page"></div>
-    </div>
-    <a id="open-form" class="small-link" href="https://form.typeform.com/to/bJBux5FE" target="_blank" rel="noopener">Form not showing? Open it here →</a>
+  <section class="step one" id="activate" aria-labelledby="activate-h">
+    <div class="step-head"><span class="num">1</span><h2 id="activate-h">Connect your Discord</h2></div>
+    <p>This is what unlocks every VIP channel. It takes about 30 seconds.</p>
+    <ol class="howto">
+      <li>Click <b>Connect my Discord</b> below.</li>
+      <li>Log in to Whop with the email you paid with.</li>
+      <li>Click <b>Connect Discord</b>, then <b>Authorize</b>.</li>
+    </ol>
+    <a id="whop-link" class="cta" href="https://whop.com/joined/fullportuniversity/click-here-to-join-discord-as-a-vip-member-xd8mZNLDg4EoGc/app/" target="_blank" rel="noopener">Connect my Discord →</a>
+    <p class="note">Bought on a different email than your Whop login? Log out of Whop and log back in with the email on your receipt. You can also use the link in the email Whop sent you.</p>
   </section>
 
   <!-- STEP 2 -->
-  <section class="step two" id="activate" aria-labelledby="activate-h">
-    <div class="step-head"><span class="num">2</span><h2 id="activate-h">Activate your membership</h2></div>
-    <div class="locked">🔒 Finish Step 1 to unlock.</div>
-    <div class="unlock">
-      <ol class="howto">
-        <li>Click <b>Activate my membership</b> below.</li>
-        <li>Log in to Whop with the email you paid with.</li>
-        <li>Click <b>Connect Discord</b>, then <b>Authorize</b>.</li>
-      </ol>
-      <a id="whop-link" class="cta" href="https://whop.com/joined/fullportuniversity/click-here-to-join-discord-as-a-vip-member-xd8mZNLDg4EoGc/app/" target="_blank" rel="noopener">Activate my membership →</a>
-      <p class="note">You can also use the link in the email Whop sent you.</p>
-    </div>
+  <section class="step two" aria-labelledby="start-h">
+    <div class="step-head"><span class="num">2</span><h2 id="start-h">Start Day 1</h2></div>
+    <p>Once you're in, open the VIP onboarding channel and watch the Day 1 video. Then turn on notifications for the analyst channels so you see the next live trade the moment it posts.</p>
   </section>
 
   <!-- FUNDING PARTNER -->
@@ -144,9 +136,9 @@ footer { font-family: var(--mono); font-size: 12px; color: var(--muted); display
   <section class="next" aria-labelledby="next-h">
     <h2 id="next-h">What happens next</h2>
     <ul>
-      <li><div><strong>A welcome call from Justin or someone on our team.</strong> It's your onboarding call: we'll help you get started, make sure you're set up properly, and answer any questions you have about the community.</div></li>
-      <li>We send you a welcome message.</li>
-      <li>We send you education resources to start your trading journey.</li>
+      <li><div><strong>Days 1 to 5:</strong> one short video a day in the VIP onboarding channel. Access, funded accounts, and how we trade.</div></li>
+      <li>Follow the analysts' live trades: every [BUY], [TRIM] and [SELL], with the reasoning.</li>
+      <li>Join the weekly live class and ask anything.</li>
     </ul>
     <p class="help">Stuck? Email <a href="mailto:growth@fullportuniversity.com">growth@fullportuniversity.com</a></p>
   </section>
@@ -154,26 +146,7 @@ footer { font-family: var(--mono); font-size: 12px; color: var(--muted); display
   <footer><span>FULL PORT UNIVERSITY</span><span>Let's get to work. 🔒</span></footer>
 </div>
 
-<script>
-// Step 2 unlocks when the Typeform is submitted, and stays unlocked on return visits.
-(function () {
-  var KEY = "fpu_onboarding_done";
-  function done(scroll) {
-    document.body.classList.add("form-done");
-    try { localStorage.setItem(KEY, "1"); } catch (e) {}
-    if (scroll) setTimeout(function () {
-      document.getElementById("activate").scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 800);
-  }
-  try { if (localStorage.getItem(KEY)) done(false); } catch (e) {}
-  window.fpuFormDone = function () { done(true); };   // called by the Typeform embed on submit
-  // If the embed fails and they fill out the form in a new tab, unlock Step 2 when they come back.
-  document.getElementById("open-form").addEventListener("click", function () {
-    window.addEventListener("focus", function () { done(true); }, { once: true });
-  });
-})();
-</script>
-<script src="https://embed.typeform.com/next/embed.js"></script>
+
 
 </body>
 </html>
